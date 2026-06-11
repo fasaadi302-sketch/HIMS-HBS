@@ -2,21 +2,24 @@ import { useState, useEffect, useRef } from "react";
 
 // ─── INITIAL DATA STORE ───────────────────────────────────────────────────────
 const INITIAL_USERS = [
-  { id: "ADM-SUPER", password: "admin2024!", role: "administrator", name: "Administrator Khalid Rana", age: 48, sex: "Male", doj: "2010-01-01", dept: "Administration" },
-  { id: "DR-001", password: "dr001pass", role: "doctor", name: "Dr. Ahmed Khan", age: 45, sex: "Male", doj: "2018-03-15", dept: "General Medicine", specialization: "Internal Medicine" },
-  { id: "DR-002", password: "dr002pass", role: "doctor", name: "Dr. Sara Malik", age: 38, sex: "Female", doj: "2020-06-01", dept: "Cardiology", specialization: "Cardiology" },
-  { id: "HO-001", password: "ho001pass", role: "house_officer", name: "HO Bilal Chaudhry", age: 26, sex: "Male", doj: "2024-01-15", dept: "General Medicine", ward: "Panel" },
-  { id: "HO-002", password: "ho002pass", role: "house_officer", name: "HO Nadia Farooq", age: 25, sex: "Female", doj: "2024-02-01", dept: "Cardiology", ward: "Private" },
-  { id: "NRS-001", password: "nrs001pass", role: "nurse", name: "Nurse Fatima Iqbal", age: 30, sex: "Female", doj: "2021-01-10", dept: "General Ward", shift: "Morning" },
-  { id: "NRS-002", password: "nrs002pass", role: "nurse", name: "Nurse Ayesha Bano", age: 27, sex: "Female", doj: "2022-04-20", dept: "ICU", shift: "Night" },
-  { id: "ADM-001", password: "adm001pass", role: "admission_officer", name: "Tariq Mehmood", age: 35, sex: "Male", doj: "2019-08-05", dept: "Admissions" },
-  { id: "MTR-001", password: "mtr001pass", role: "matron", name: "Matron Zainab Hussain", age: 50, sex: "Female", doj: "2010-02-28", dept: "Nursing Administration" },
-  { id: "PHR-001", password: "phr001pass", role: "pharmacy", name: "Pharmacist Khalid khan", age: 40, sex: "Male", doj: "2017-11-12", dept: "Pharmacy" },
+  { id: "ADM-SUPER", password: "hbs", role: "administrator", name: "Administrator Baseer Doobey", age: 48, sex: "Male", doj: "2010-01-01", dept: "Administration" },
+  { id: "DR-001", password: "hbs", role: "doctor", name: "Hafeez ud din", age: 45, sex: "Male", doj: "2018-03-15", dept: "General Medicine", specialization: "Internal Medicine" },
+  { id: "DR-002", password: "hbs", role: "doctor", name: "Ambreen Zahoor", age: 38, sex: "Female", doj: "2020-06-01", dept: "Cardiology", specialization: "Cardiology" },
+  { id: "HO-001", password: "hbs", role: "house_officer", name: "HO Bilal Chaudhry", age: 26, sex: "Male", doj: "2024-01-15", dept: "General Medicine", ward: "Panel" },
+  { id: "HO-002", password: "hbs", role: "house_officer", name: "HO Nadia Farooq", age: 25, sex: "Female", doj: "2024-02-01", dept: "Cardiology", ward: "Private" },
+  { id: "NRS-001", password: "hbs", role: "nurse", name: "Nurse Ayesha", age: 30, sex: "Female", doj: "2021-01-10", dept: "General Ward", shift: "Morning" },
+  { id: "NRS-002", password: "hbs", role: "nurse", name: "Nurse Rimsha", age: 27, sex: "Female", doj: "2022-04-20", dept: "ICU", shift: "Night" },
+  { id: "ADM-001", password: "hbs", role: "admission_officer", name: "Nouman Bajwa", age: 35, sex: "Male", doj: "2019-08-05", dept: "Admissions" },
+  { id: "MTR-001", password: "hbs", role: "matron", name: "Matron Zainab", age: 50, sex: "Female", doj: "2010-02-28", dept: "Nursing Administration" },
+  { id: "PHR-001", password: "hbs", role: "pharmacy", name: "Pharmacist Khawar", age: 40, sex: "Male", doj: "2017-11-12", dept: "Pharmacy" },
 ];
 
 const INITIAL_PATIENTS = [
-  { admissionNo: "IPD-2024-001", name: "Muhammad Raza", age: 55, sex: "Male", doa: "2024-06-01", time: "09:30", ward: "Panel", doctor: "DR-001", admittedBy: "ADM-001", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null },
-  { admissionNo: "IPD-2024-002", name: "Zara Sheikh", age: 34, sex: "Female", doa: "2024-06-02", time: "14:00", ward: "Private", doctor: "DR-002", admittedBy: "ADM-001", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null },
+  { admissionNo: "IPD-2026-001", name: "Amina Begum", age: 30, sex: "Female", doa: "2026-06-03", time: "14:00", ward: "Private", doctor: "Ambreen Zahoor", admittedBy: "Nouman Bajwa", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null, dischargeMedRequests: [], dischargeMedDispensed: [] },
+  { admissionNo: "IPD-2026-002", name: "Ahmed Ali", age: 32, sex: "Female", doa: "2026-06-04", time: "14:09", ward: "Private", doctor: "Ambreen Zahoor", admittedBy: "Nouman Bajwa", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null, dischargeMedRequests: [], dischargeMedDispensed: [] },
+  { admissionNo: "IPD-2026-003", name: "Shahida Bibi", age: 23, sex: "Female", doa: "2026-06-05", time: "14:43", ward: "Private", doctor: "Hafeez ud din", admittedBy: "Nouman Bajwa", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null, dischargeMedRequests: [], dischargeMedDispensed: [] },
+  { admissionNo: "IPD-2026-004", name: "Muhammad Raza", age: 55, sex: "Male", doa: "2026-06-06", time: "09:30", ward: "Panel", doctor: "Hafeez ud din", admittedBy: "Nouman Bajwa", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null, dischargeMedRequests: [], dischargeMedDispensed: [] },
+  { admissionNo: "IPD-2026-005", name: "Zara Sheikh", age: 34, sex: "Female", doa: "2026-06-07", time: "14:00", ward: "Private", doctor: "Ambreen Zahoor", admittedBy: "Nouman Bajwa", diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [], discharged: false, dischargeInfo: null, dischargeMedRequests: [], dischargeMedDispensed: [] },
 ];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -29,9 +32,17 @@ function now() {
   const d = new Date();
   return { date: d.toISOString().split("T")[0], time: d.toTimeString().slice(0, 5) };
 }
-function getUserName(users, id) {
-  const u = users.find(x => x.id === id);
-  return u ? u.name : id;
+function getUserName(idOrUsers, id) {
+  if (id === undefined) {
+    // called as getUserName(id)
+    const u = INITIAL_USERS.find(u => u.id === idOrUsers);
+    return u ? u.name : idOrUsers;
+  } else {
+    // called as getUserName(users, id)
+    const arr = Array.isArray(idOrUsers) ? idOrUsers : INITIAL_USERS;
+    const u = arr.find(u => u.id === id);
+    return u ? u.name : id;
+  }
 }
 
 // ─── ICONS ────────────────────────────────────────────────────────────────────
@@ -78,7 +89,7 @@ const ROLE_CONFIG = {
 // ─── TOAST ────────────────────────────────────────────────────────────────────
 function Toast({ toasts }) {
   return (
-    <div style={{ position: "fixed", bottom: 24, right: 24, zIndex: 9999, display: "flex", flexDirection: "column", gap: 8 }}>
+    <div style={{ position: "fixed", top: 24, right: 24, zIndex: 9999, display: "flex", flexDirection: "column", gap: 8 }}>
       {toasts.map(t => (
         <div key={t.id} style={{
           background: t.type === "success" ? "#065f46" : t.type === "error" ? "#7f1d1d" : "#1e3a5f",
@@ -132,13 +143,13 @@ function LoginPage({ onLogin, users }) {
   };
 
   const quickLogins = [
-    { label: "Admin", id: "ADM-SUPER", pw: "admin2024!" },
-    { label: "Doctor", id: "DR-001", pw: "dr001pass" },
-    { label: "House Officer", id: "HO-001", pw: "ho001pass" },
-    { label: "Nurse", id: "NRS-001", pw: "nrs001pass" },
-    { label: "Admission", id: "ADM-001", pw: "adm001pass" },
-    { label: "Matron", id: "MTR-001", pw: "mtr001pass" },
-    { label: "Pharmacy", id: "PHR-001", pw: "phr001pass" },
+    { label: "Admin", id: "ADM-SUPER", pw: "hbs" },
+    { label: "Doctor", id: "DR-001", pw: "hbs" },
+    { label: "House Officer", id: "HO-001", pw: "hbs" },
+    { label: "Nurse", id: "NRS-001", pw: "hbs" },
+    { label: "Admission", id: "ADM-001", pw: "hbs" },
+    { label: "Matron", id: "MTR-001", pw: "hbs" },
+    { label: "Pharmacy", id: "PHR-001", pw: "hbs" },
   ];
 
   return (
@@ -170,9 +181,8 @@ function LoginPage({ onLogin, users }) {
           <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 36 }}>
-              <div style={{ background: "#fff", borderRadius: 14, padding: 10, display: "flex", alignItems: "center", justifyContent: "center", animation: "pulse 2s ease-in-out infinite" }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#1d4ed8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              </div>
+              <img src="/logo1.png" alt="HBS General Hospital"
+  style={{ height: 60, width: "auto" }} />
               <div>
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: 22, letterSpacing: 1 }}>HBS</div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase" }}>Tertiary Care Teaching Hospital Islamabad</div>
@@ -189,7 +199,7 @@ function LoginPage({ onLogin, users }) {
             </div>
           </div>
           <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 24, marginTop: 32 }}>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, margin: 0 }}>© 2024 HBS General Hospital · All rights reserved</p>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, margin: 0 }}>© 2026 HBS Tertiary Care Teaching Hospital · All rights reserved</p>
           </div>
         </div>
         <div style={{ width: 390, background: "rgba(10,18,35,0.95)", backdropFilter: "blur(20px)", padding: "44px 40px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -288,6 +298,7 @@ export default function App() {
       { key: "request_meds", label: "Med Requests", icon: "pill" },
       { key: "receive_meds", label: "Receive Meds", icon: "package" },
       { key: "administer", label: "Administer", icon: "check" },
+      { key: "vitals", label: "Vitals", icon: "plus" },
     ] : []),
     ...(user.role === "matron" ? [{ key: "approvals", label: "Approvals", icon: "shield" }] : []),
     ...(user.role === "pharmacy" ? [{ key: "dispense", label: "Dispense Meds", icon: "package" }] : []),
@@ -309,6 +320,7 @@ export default function App() {
       case "administer": return <NurseAdministerPage user={user} patients={patients} setPatients={setPatients} toast={toast} />;
       case "admin_users": return <AdminUsersPage users={users} setUsers={setUsers} user={user} toast={toast} showConfirm={showConfirm} />;
       case "admin_patients": return <AdminPatientsPage patients={patients} setPatients={setPatients} users={users} toast={toast} showConfirm={showConfirm} />;
+      case "vitals": return <NurseVitalsPage user={user} patients={patients} setPatients={setPatients} toast={toast} />;
       default: return <HomePage user={user} patients={patients} users={users} rc={rc} />;
     }
   };
@@ -356,12 +368,10 @@ export default function App() {
       {/* Sidebar */}
       <div style={{ width: 238, background: `linear-gradient(180deg, ${rc.color} 0%, ${rc.color}dd 100%)`, display: "flex", flexDirection: "column", padding: "20px 12px", position: "sticky", top: 0, height: "100vh", overflowY: "auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, padding: "0 4px" }}>
-          <div style={{ background: "rgba(255,255,255,0.2)", borderRadius: 10, padding: 8 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </div>
+          <img src="/logo1.png" alt="HBS Logo" style={{ width: 44, height: 44, borderRadius: 8, objectFit: "contain" }} />
           <div>
             <div style={{ color: "#fff", fontWeight: 800, fontSize: 17, letterSpacing: 0.5 }}>HBS</div>
-            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase" }}>Hospital</div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase" }}>Tertiary Care Teaching Hospital Islamabad</div>
           </div>
         </div>
         <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "10px 12px", marginBottom: 18, marginTop: 8 }}>
@@ -377,7 +387,7 @@ export default function App() {
             </button>
           ))}
         </nav>
-        <button onClick={() => setUser(null)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, cursor: "pointer", color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "none", fontSize: 13, fontWeight: 500, marginTop: 8 }}>
+        <button onClick={() => { setUser(null); setActiveTab("home"); }} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, cursor: "pointer", color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "none", fontSize: 13, fontWeight: 500, marginTop: 8 }}>
           <Icon name="logout" size={16} /> Logout
         </button>
       </div>
@@ -489,49 +499,49 @@ function PatientDetailModal({ patient: p, users }) {
 
 // ─── HOME PAGE ─────────────────────────────────────────────────────────────────
 function HomePage({ user, patients, users, rc }) {
-  const active = patients.filter(p => !p.discharged);
-  const stats = [
+const active = patients.filter(p => !p.discharged);
+const stats = [
     { label: "Active Patients", value: active.length, icon: "bed", color: "#0ea5e9" },
     { label: "Admitted Today", value: active.filter(p => p.doa === now().date).length, icon: "calendar", color: "#10b981" },
     { label: "Panel Ward", value: active.filter(p => p.ward === "Panel").length, icon: "clipboard", color: "#f59e0b" },
     { label: "Private Ward", value: active.filter(p => p.ward === "Private").length, icon: "shield", color: "#8b5cf6" },
   ];
-  return (
-    <div>
-      <div style={{ background: `linear-gradient(135deg, ${rc.color}15, ${rc.color}05)`, border: `1px solid ${rc.color}30`, borderRadius: 16, padding: "20px 24px", marginBottom: 20 }}>
-        <h2 style={{ margin: "0 0 4px", fontSize: 18, fontWeight: 700, color: "#0f172a" }}>Welcome to HBS Hospital Management System</h2>
-        <p style={{ margin: 0, color: "#64748b", fontSize: 13 }}>HBS General Hospital · Indoor Patient Management (IPD Module)</p>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
-        {stats.map(s => (
-          <div key={s.label} className="stat-card">
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: `${s.color}15`, display: "flex", alignItems: "center", justifyContent: "center", color: s.color }}>
-              <Icon name={s.icon} size={18} />
-            </div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: "#0f172a" }}>{s.value}</div>
-            <div style={{ fontSize: 12, color: "#64748b", fontWeight: 500 }}>{s.label}</div>
-          </div>
+return (
+<div>
+<div style={{ background: `linear-gradient(135deg, ${rc.color}15, ${rc.color}05)`, border: `1px solid ${rc.color}30`, borderRadius: 16, padding: "20px 24px", marginBottom: 20 }}>
+<h2 style={{ margin: "0 0 4px", fontSize: 18, fontWeight: 700, color: "#0f172a" }}>Welcome to HBS Hospital Management System</h2>
+<p style={{ margin: 0, color: "#64748b", fontSize: 13 }}>HBS General Hospital · Indoor Patient Management (IPD Module)</p>
+</div>
+<div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 20 }}>
+{stats.map(s => (
+<div key={s.label} className="stat-card">
+<div style={{ width: 38, height: 38, borderRadius: 10, background: `${s.color}15`, display: "flex", alignItems: "center", justifyContent: "center", color: s.color }}>
+<Icon name={s.icon} size={18} />
+</div>
+<div style={{ fontSize: 26, fontWeight: 800, color: "#0f172a" }}>{s.value}</div>
+<div style={{ fontSize: 12, color: "#64748b", fontWeight: 500 }}>{s.label}</div>
+</div>
         ))}
-      </div>
-      <div className="card">
-        <h3 style={{ margin: "0 0 14px", fontSize: 15, fontWeight: 700, color: "#0f172a" }}>Recent Active Admissions</h3>
-        <table>
-          <thead><tr><th>Admission No</th><th>Patient Name</th><th>Ward</th><th>Doctor</th><th>DOA</th><th>Status</th></tr></thead>
-          <tbody>
-            {active.slice(-6).reverse().map(p => (
-              <tr key={p.admissionNo}>
-                <td style={{ fontWeight: 600, color: "#0ea5e9" }}>{p.admissionNo}</td>
-                <td>{p.name}</td>
-                <td><span className={`badge badge-${p.ward.toLowerCase()}`}>{p.ward}</span></td>
-                <td style={{ color: "#64748b" }}>{getUserName(users, p.doctor)}</td>
-                <td>{p.doa} {p.time}</td>
-                <td><span className="badge badge-approved">Active</span></td>
-              </tr>
+</div>
+<div className="card">
+<h3 style={{ margin: "0 0 14px", fontSize: 15, fontWeight: 700, color: "#0f172a" }}>Recent Active Admissions</h3>
+<table>
+<thead><tr><th>Admission No</th><th>Patient Name</th><th>Ward</th><th>Doctor</th><th>DOA</th><th>Status</th></tr></thead>
+<tbody>
+{active.slice(-6).reverse().map(p => (
+<tr key={p.admissionNo}>
+<td style={{ fontWeight: 600, color: "#0ea5e9" }}>{p.admissionNo}</td>
+<td>{p.name}</td>
+<td><span className={`badge badge-${p.ward.toLowerCase()}`}>{p.ward}</span></td>
+<td style={{ color: "#64748b" }}>{getUserName(p.doctor)}</td>
+<td>{p.doa} {p.time}</td>
+<td><span className="badge badge-approved">Active</span></td>
+</tr>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+</tbody>
+</table>
+</div>
+</div>
   );
 }
 
@@ -578,49 +588,47 @@ function ProfilePage({ user, rc }) {
 
 // ─── INDOOR / IPD PAGE ────────────────────────────────────────────────────────
 function IndoorPage({ user, patients, users, setSelectedPatient }) {
-  const [search, setSearch] = useState("");
-  const [wardFilter, setWardFilter] = useState("All");
-  const [showDischarged, setShowDischarged] = useState(false);
-
-  const visible = patients.filter(p => {
-    if (!showDischarged && p.discharged) return false;
-    if (showDischarged && !p.discharged) return false;
-    // House officers see all patients in all wards
-    if (user.role === "doctor" && p.doctor !== user.id) return false;
-    if (wardFilter !== "All" && p.ward !== wardFilter) return false;
-    if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.admissionNo.includes(search)) return false;
-    return true;
+const [search, setSearch] = useState("");
+const [wardFilter, setWardFilter] = useState("All");
+const [showDischarged, setShowDischarged] = useState(false);
+const visible = patients.filter(p => {
+if (!showDischarged && p.discharged) return false;
+if (showDischarged && !p.discharged) return false;
+// House officers see all patients in all wards
+if (user.role === "doctor" && p.doctor !== user.id) return false;
+if (wardFilter !== "All" && p.ward !== wardFilter) return false;
+if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.admissionNo.includes(search)) return false;
+return true;
   });
-
-  return (
-    <div>
-      <div style={{ display: "flex", gap: 12, marginBottom: 18, alignItems: "center", flexWrap: "wrap" }}>
-        <input className="form-input" placeholder="Search by name or admission no..." value={search} onChange={e => setSearch(e.target.value)} style={{ maxWidth: 300 }} />
-        {["All", "Panel", "Private"].map(w => (
-          <button key={w} onClick={() => setWardFilter(w)}
-            style={{ padding: "8px 16px", borderRadius: 8, border: "1.5px solid", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
-              background: wardFilter === w ? "#0ea5e9" : "#fff", borderColor: wardFilter === w ? "#0ea5e9" : "#e2e8f0",
-              color: wardFilter === w ? "#fff" : "#475569" }}>
-            {w}
-          </button>
+return (
+<div>
+<div style={{ display: "flex", gap: 12, marginBottom: 18, alignItems: "center", flexWrap: "wrap" }}>
+<input className="form-input" placeholder="Search by name or admission no..." value={search} onChange={e => setSearch(e.target.value)} style={{ maxWidth: 300 }} />
+{["All", "Panel", "Private"].map(w => (
+<button key={w} onClick={() => setWardFilter(w)}
+style={{ padding: "8px 16px", borderRadius: 8, border: "1.5px solid", fontSize: 13, fontWeight: 600, cursor: "pointer", transition: "all 0.15s",
+background: wardFilter === w ? "#0ea5e9" : "#fff", borderColor: wardFilter === w ? "#0ea5e9" : "#e2e8f0",
+color: wardFilter === w ? "#fff" : "#475569" }}>
+{w}
+</button>
         ))}
-        <button onClick={() => setShowDischarged(!showDischarged)}
-          style={{ padding: "8px 16px", borderRadius: 8, border: "1.5px solid", fontSize: 13, fontWeight: 600, cursor: "pointer",
-            background: showDischarged ? "#fee2e2" : "#fff", borderColor: showDischarged ? "#ef4444" : "#e2e8f0",
-            color: showDischarged ? "#dc2626" : "#475569" }}>
-          {showDischarged ? "Show Active" : "Show Discharged"}
-        </button>
-      </div>
-      {visible.length === 0 ? (
-        <div style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
-          <Icon name="bed" size={48} /><p style={{ marginTop: 16 }}>No patients found</p>
-        </div>
+<button onClick={() => setShowDischarged(!showDischarged)}
+style={{ padding: "8px 16px", borderRadius: 8, border: "1.5px solid", fontSize: 13, fontWeight: 600, cursor: "pointer",
+background: showDischarged ? "#fee2e2" : "#fff", borderColor: showDischarged ? "#ef4444" : "#e2e8f0",
+color: showDischarged ? "#dc2626" : "#475569" }}>
+{showDischarged ? "Show Active" : "Show Discharged"}
+</button>
+</div>
+{visible.length === 0 ? (
+<div style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
+<Icon name="bed" size={48} /><p style={{ marginTop: 16 }}>No patients found</p>
+</div>
       ) : (
-        <div style={{ display: "grid", gap: 12 }}>
-          {visible.map(p => <PatientCard key={p.admissionNo} patient={p} user={user} users={users} onClick={() => setSelectedPatient(p)} />)}
-        </div>
+<div style={{ display: "grid", gap: 12 }}>
+{visible.map(p => <PatientCard key={p.admissionNo} patient={p} user={user} onClick={() => setSelectedPatient(p)} />)}
+</div>
       )}
-    </div>
+</div>
   );
 }
 
@@ -648,7 +656,7 @@ function PatientCard({ patient: p, user, users, onClick }) {
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 12, color: "#64748b" }}>{p.doa} · {p.time}</div>
-          <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 1 }}>Dr: {getUserName(users, p.doctor)}</div>
+          <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 1 }}>Dr: {getUserName(p.doctor)}</div>
         </div>
       </div>
       {!p.discharged && (
@@ -686,7 +694,7 @@ function AdmitPage({ patients, setPatients, user, users, toast }) {
         name: form.name, age: parseInt(form.age), sex: form.sex,
         ward: form.ward, doctor: form.doctor, contact: form.contact,
         address: form.address, complaint: form.complaint,
-        doa: n.date, time: n.time, admittedBy: user.id,
+        doa: n.date, time: n.time, admittedBy: user.name,
         diagnosis: "", prescriptions: [], nurseRequests: [], matronApprovals: [], dispensed: [], administered: [],
         discharged: false, dischargeInfo: null
       };
@@ -754,31 +762,72 @@ function AdmitPage({ patients, setPatients, user, users, toast }) {
 function DischargePage({ user, patients, setPatients, users, toast, showConfirm }) {
   const [notes, setNotes] = useState({});
   const [saving, setSaving] = useState(null);
+  const [homeMeds, setHomeMeds] = useState({});
 
-  // Who can discharge whom:
-  // - Doctor: only their own patients
-  // - Admission officer: all active patients (and can re-admit)
-  // - House officer: only patients admitted by the doctor they assist (all ward patients visible to them)
-  // - Administrator: all patients
+  const getHomeMeds = (admNo) => homeMeds[admNo] || [{ name: "", dose: "", freq: "", duration: "", quantity: "" }];
+  const updateHomeMed = (admNo, i, k, v) => {
+    const current = getHomeMeds(admNo);
+    const updated = [...current];
+    updated[i] = { ...updated[i], [k]: v };
+    setHomeMeds({ ...homeMeds, [admNo]: updated });
+  };
+  const addHomeMed = (admNo) => {
+    setHomeMeds({ ...homeMeds, [admNo]: [...getHomeMeds(admNo), { name: "", dose: "", freq: "", duration: "", quantity: "" }] });
+  };
+  const removeHomeMed = (admNo, i) => {
+    setHomeMeds({ ...homeMeds, [admNo]: getHomeMeds(admNo).filter((_, j) => j !== i) });
+  };
+
   const canDischarge = (p) => {
     if (p.discharged) return false;
     if (user.role === "administrator") return true;
     if (user.role === "admission_officer") return true;
-    if (user.role === "doctor") return p.doctor === user.id;
-    if (user.role === "house_officer") return true; // HO can discharge any ward patient
+    if (user.role === "doctor") return p.doctor === user.name;
+    if (user.role === "house_officer") return true;
     return false;
   };
 
   const activePatients = patients.filter(p => !p.discharged && canDischarge(p));
   const dischargedPatients = patients.filter(p => p.discharged);
 
+  // Submit home meds to Matron for approval
+  const submitHomeMeds = (admNo, patName) => {
+    const meds = getHomeMeds(admNo).filter(m => m.name);
+    if (meds.length === 0) { toast("Add at least one home medication before submitting", "error"); return; }
+    setSaving(admNo);
+    setTimeout(() => {
+      setPatients(ps => ps.map(p => p.admissionNo !== admNo ? p : {
+        ...p,
+        dischargeMedRequests: meds.map((m, i) => ({
+          ...m,
+          idx: i,
+          submittedBy: user.name,
+          submittedById: user.id,
+          submittedAt: `${now().date} ${now().time}`,
+          status: "pending",       // pending → approved / rejected
+          dispensed: false,
+          matronReceived: false,
+        })),
+        dischargeNotes: notes[admNo] || "",
+      }));
+      toast(`Home medications for ${patName} submitted to Matron for approval`);
+      setSaving(null);
+    }, 500);
+  };
+
   const discharge = (admNo, patName) => {
     showConfirm(`Discharge ${patName}? This will mark the patient as discharged.`, () => {
-      setSaving(admNo);
+      setSaving(`dc-${admNo}`);
+      const p = patients.find(p => p.admissionNo === admNo);
       setTimeout(() => {
-        setPatients(ps => ps.map(p => p.admissionNo !== admNo ? p : {
-          ...p, discharged: true,
-          dischargeInfo: { dischargedBy: user.id, dischargedAt: `${now().date} ${now().time}`, notes: notes[admNo] || "" }
+        setPatients(ps => ps.map(pt => pt.admissionNo !== admNo ? pt : {
+          ...pt, discharged: true,
+          dischargeInfo: {
+            dischargedBy: user.id,
+            dischargedAt: `${now().date} ${now().time}`,
+            notes: pt.dischargeNotes || "",
+            homeMedications: pt.dischargeMedRequests,
+          }
         }));
         toast(`Patient ${patName} discharged successfully`);
         setSaving(null);
@@ -808,38 +857,123 @@ function DischargePage({ user, patients, setPatients, users, toast, showConfirm 
             <Icon name="check" size={40} /><p style={{ marginTop: 12 }}>No active patients to discharge.</p>
           </div>
         ) : activePatients.map(p => (
-          <div key={p.admissionNo} style={{ borderBottom: "1px solid #f1f5f9", paddingBottom: 16, marginBottom: 16 }}>
+          <div key={p.admissionNo} style={{ borderBottom: "1px solid #f1f5f9", paddingBottom: 20, marginBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 700, fontSize: 15 }}>{p.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({p.admissionNo})</span></div>
                 <div style={{ color: "#64748b", fontSize: 12, marginTop: 2 }}>{p.ward} Ward · Dr: {getUserName(users, p.doctor)} · Admitted: {p.doa}</div>
-                <div style={{ marginTop: 10, maxWidth: 420 }}>
+
+                {/* Discharge Notes */}
+                <div style={{ marginTop: 12, maxWidth: 500 }}>
                   <label style={{ fontSize: 11 }}>Discharge Notes (optional)</label>
                   <input className="form-input" placeholder="Reason for discharge, follow-up instructions..." value={notes[p.admissionNo] || ""} onChange={e => setNotes({ ...notes, [p.admissionNo]: e.target.value })} style={{ fontSize: 13 }} />
                 </div>
+
+                {/* Home Medications */}
+                <div style={{ marginTop: 16 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                    <label style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: 0 }}>Home Medications (at discharge)</label>
+                    <button className="btn-primary" onClick={() => addHomeMed(p.admissionNo)} style={{ padding: "5px 12px", fontSize: 12 }}>+ Add Medicine</button>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {getHomeMeds(p.admissionNo).map((m, i) => (
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
+                        <div><label style={{ fontSize: 10 }}>Medicine Name</label><input className="form-input" value={m.name} onChange={e => updateHomeMed(p.admissionNo, i, "name", e.target.value)} placeholder="e.g. Paracetamol" /></div>
+                        <div><label style={{ fontSize: 10 }}>Dose</label><input className="form-input" value={m.dose} onChange={e => updateHomeMed(p.admissionNo, i, "dose", e.target.value)} placeholder="500mg" /></div>
+                        <div><label style={{ fontSize: 10 }}>Frequency</label><input className="form-input" value={m.freq} onChange={e => updateHomeMed(p.admissionNo, i, "freq", e.target.value)} placeholder="TDS" /></div>
+                        <div><label style={{ fontSize: 10 }}>Duration</label><input className="form-input" value={m.duration} onChange={e => updateHomeMed(p.admissionNo, i, "duration", e.target.value)} placeholder="5 days" /></div>
+                        <div><label style={{ fontSize: 10 }}>Quantity</label><input className="form-input" value={m.quantity} onChange={e => updateHomeMed(p.admissionNo, i, "quantity", e.target.value)} placeholder="e.g. 15" /></div>
+                        <button onClick={() => removeHomeMed(p.admissionNo, i)} style={{ background: "#fee2e2", border: "none", color: "#dc2626", borderRadius: 8, padding: "10px 12px", cursor: "pointer" }}>✕</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <button className="btn-danger" onClick={() => discharge(p.admissionNo, p.name)} disabled={saving === p.admissionNo} style={{ marginTop: 4 }}>
-                {saving === p.admissionNo ? "..." : "Discharge"}
-              </button>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginLeft: 16, alignItems: "flex-end" }}>
+                {/* Step 1: Submit meds to Matron */}
+                {p.dischargeMedRequests.length === 0 ? (
+                  <button className="btn-warning" onClick={() => submitHomeMeds(p.admissionNo, p.name)} disabled={saving === p.admissionNo} style={{ whiteSpace: "nowrap" }}>
+                    {saving === p.admissionNo ? "..." : "📋 Submit Meds to Matron"}
+                  </button>
+                ) : (
+                  (() => {
+                    const reqs = p.dischargeMedRequests;
+                    const allDone = reqs.every(m => m.matronReceived === true || m.status === "rejected");
+                    const anyPending = reqs.some(m => m.status === "pending");
+                    const anyApprovedNotDispensed = reqs.some(m => m.status === "approved" && !m.dispensed);
+                    const anyDispensedNotReceived = reqs.some(m => m.dispensed && !m.matronReceived);
+              
+                    let statusText = "Meds submitted · awaiting approval chain";
+                    let statusColor = "#f59e0b";
+              
+                    if (allDone) {
+                      statusText = "Approval chain complete · Ready for discharge";
+                      statusColor = "#10b981";
+                    } else if (anyPending) {
+                      statusText = "Awaiting Matron Approval";
+                      statusColor = "#f59e0b";
+                    } else if (anyApprovedNotDispensed) {
+                      statusText = "Approved · Awaiting Pharmacy Dispensing";
+                      statusColor = "#0ea5e9";
+                    } else if (anyDispensedNotReceived) {
+                      statusText = "Dispensed · Awaiting Matron Receipt";
+                      statusColor = "#8b5cf6";
+                    }
+              
+                    return (
+                      <div style={{ fontSize: 11, color: statusColor, fontWeight: 700, textAlign: "right", maxWidth: 160, lineHeight: 1.4 }}>
+                        {statusText}
+                      </div>
+                    );
+                  })()
+                )}
+                {/* Step 2: Discharge — only enabled when all meds are matronReceived or rejected */}
+                {(() => {
+                  const allDone = p.dischargeMedRequests.length === 0 ||
+                    p.dischargeMedRequests.every(m => m.matronReceived === true || m.status === "rejected");
+                  return (
+                    <button
+                      className="btn-danger"
+                      onClick={() => discharge(p.admissionNo, p.name)}
+                      disabled={!allDone || saving === `dc-${p.admissionNo}`}
+                      style={{ whiteSpace: "nowrap", opacity: allDone ? 1 : 0.45, cursor: allDone ? "pointer" : "not-allowed" }}
+                      title={allDone ? "Discharge patient" : "Wait for full medication chain to complete"}
+                    >
+                      {saving === `dc-${p.admissionNo}` ? "..." : "Discharge"}
+                    </button>
+                  );
+                })()}
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Discharged patients — re-admit option for admission officer/admin */}
+      {/* Discharged patients — re-admit option */}
       {["admission_officer", "administrator"].includes(user.role) && dischargedPatients.length > 0 && (
         <div className="card">
           <h3 style={{ margin: "0 0 16px", fontSize: 15, fontWeight: 700 }}>Discharged Patients — Re-admit</h3>
           {dischargedPatients.map(p => (
-            <div key={p.admissionNo} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #f1f5f9", paddingBottom: 12, marginBottom: 12 }}>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 14 }}>{p.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({p.admissionNo})</span></div>
-                <div style={{ color: "#64748b", fontSize: 12 }}>{p.ward} Ward · Discharged: {p.dischargeInfo?.dischargedAt || "—"}</div>
-                {p.dischargeInfo?.notes && <div style={{ color: "#94a3b8", fontSize: 11, marginTop: 2 }}>{p.dischargeInfo.notes}</div>}
+            <div key={p.admissionNo} style={{ borderBottom: "1px solid #f1f5f9", paddingBottom: 12, marginBottom: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 14 }}>{p.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({p.admissionNo})</span></div>
+                  <div style={{ color: "#64748b", fontSize: 12 }}>{p.ward} Ward · Discharged: {p.dischargeInfo?.dischargedAt || "—"}</div>
+                  {p.dischargeInfo?.notes && <div style={{ color: "#94a3b8", fontSize: 11, marginTop: 2 }}>{p.dischargeInfo.notes}</div>}
+                  {p.dischargeInfo?.homeMedications?.length > 0 && (
+                    <div style={{ marginTop: 6 }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: "#0369a1" }}>Home Meds: </span>
+                      {p.dischargeInfo.homeMedications.map((m, i) => (
+                        <span key={i} style={{ fontSize: 11, color: "#0369a1", marginRight: 10 }}>{m.name} {m.dose} · {m.freq} · {m.duration} {(m.matronReceivedQty || m.approvedQty || m.quantity) ? `· Qty: ${m.matronReceivedQty || m.approvedQty || m.quantity}` : ""}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <button className="btn-success" onClick={() => readmit(p.admissionNo, p.name)} style={{ whiteSpace: "nowrap" }}>
+                  <Icon name="refresh" size={13} /> Re-admit
+                </button>
               </div>
-              <button className="btn-success" onClick={() => readmit(p.admissionNo, p.name)} style={{ whiteSpace: "nowrap" }}>
-                <Icon name="refresh" size={13} /> Re-admit
-              </button>
             </div>
           ))}
         </div>
@@ -848,13 +982,14 @@ function DischargePage({ user, patients, setPatients, users, toast, showConfirm 
   );
 }
 
-// ─── DOCTOR: PRESCRIBE (shows advised medications, not tracking) ───────────────
+// ─── DOCTOR: PRESCRIBE ────────────────────────────────────────────────────────
 function PrescribePage({ user, patients, setPatients, toast }) {
-  const myPatients = patients.filter(p => p.doctor === user.id && !p.discharged);
+  const myPatients = patients.filter(p => p.doctor === user.name);
   const [sel, setSel] = useState(null);
   const [diag, setDiag] = useState("");
   const [history, setHistory] = useState("");
-  const [meds, setMeds] = useState([{ name: "", dose: "", freq: "", duration: "" }]);
+  const [meds, setMeds] = useState([{ name: "", dose: "", freq: "", duration: "", quantity: "" }]);
+  const [vitals, setVitals] = useState({ bp: "", pulse: "", temperature: "", spo2: "", bsr: "", others: "" });
   const [saving, setSaving] = useState(false);
 
   const selPat = myPatients.find(p => p.admissionNo === sel);
@@ -863,48 +998,46 @@ function PrescribePage({ user, patients, setPatients, toast }) {
     if (selPat) {
       setDiag(selPat.diagnosis || "");
       setHistory(selPat.patientHistory || "");
-      setMeds(selPat.prescriptions.length ? selPat.prescriptions : [{ name: "", dose: "", freq: "", duration: "" }]);
+      setMeds(selPat.prescriptions.length ? selPat.prescriptions : [{ name: "", dose: "", freq: "", duration: "", quantity: "" }]);
+      setVitals(selPat.vitals || { bp: "", pulse: "", temperature: "", spo2: "", bsr: "", others: "" });
     }
   }, [sel]);
 
-  const addMed = () => setMeds([...meds, { name: "", dose: "", freq: "", duration: "" }]);
+  const addMed = () => setMeds([...meds, { name: "", dose: "", freq: "", duration: "", quantity: "" }]);
   const updateMed = (i, k, v) => { const m = [...meds]; m[i][k] = v; setMeds(m); };
 
   const save = () => {
     if (!selPat || !diag) { toast("Please select patient and enter diagnosis", "error"); return; }
     setSaving(true);
     setTimeout(() => {
-      setPatients(ps => ps.map(p => p.admissionNo === sel
-        ? { ...p, diagnosis: diag, patientHistory: history, prescriptions: meds.filter(m => m.name).map(m => ({ ...m, prescribedBy: user.id, prescribedByName: user.name })) }
-        : p));
+      setPatients(ps => ps.map(p => p.admissionNo === sel ? { ...p, diagnosis: diag, patientHistory: history, prescriptions: meds.filter(m => m.name), vitals } : p));
       toast("Prescription saved successfully");
       setSaving(false);
     }, 500);
   };
 
   return (
-    <div style={{ maxWidth: 760 }}>
-      {/* Patient selector */}
+    <div style={{ maxWidth: 820 }}>
       <div className="card" style={{ marginBottom: 16 }}>
         <label>Select Patient</label>
-        <select className="form-input" value={sel || ""} onChange={e => setSel(e.target.value)} style={{ maxWidth: 420 }}>
+        <select className="form-input" value={sel || ""} onChange={e => setSel(e.target.value)} style={{ maxWidth: 400 }}>
           <option value="">-- Choose your patient --</option>
-          {myPatients.map(p => <option key={p.admissionNo} value={p.admissionNo}>{p.name} · {p.admissionNo} · {p.ward}</option>)}
+          {myPatients.map(p => <option key={p.admissionNo} value={p.admissionNo}>{p.name} · {p.admissionNo}</option>)}
         </select>
       </div>
 
       {selPat && (
         <div className="card">
-          <div style={{ background: "#f0f9ff", border: "1px solid #bae6fd", borderRadius: 10, padding: "12px 16px", marginBottom: 18 }}>
+          <div style={{ background: "#f0f9ff", border: "1px solid #bae6fd", borderRadius: 10, padding: "14px 16px", marginBottom: 20 }}>
             <div style={{ fontWeight: 700, color: "#0369a1" }}>{selPat.name}</div>
-            <div style={{ color: "#0284c7", fontSize: 12 }}>{selPat.age}yrs · {selPat.sex} · {selPat.ward} Ward · Adm: {selPat.doa}</div>
-            {selPat.complaint && <div style={{ color: "#0369a1", fontSize: 12, marginTop: 3 }}>Complaint: {selPat.complaint}</div>}
+            <div style={{ color: "#0284c7", fontSize: 13 }}>{selPat.age}yrs · {selPat.sex} · {selPat.ward} Ward · Adm: {selPat.doa}</div>
+            {selPat.complaint && <div style={{ color: "#0369a1", fontSize: 13, marginTop: 4 }}>Chief Complaint: {selPat.complaint}</div>}
           </div>
 
-          <div style={{ display: "grid", gap: 14 }}>
+          <div style={{ display: "grid", gap: 16 }}>
             <div>
               <label>Patient History</label>
-              <textarea className="form-input" value={history} onChange={e => setHistory(e.target.value)} placeholder="Past medical history, allergies..." rows={2} style={{ resize: "vertical" }} />
+              <textarea className="form-input" value={history} onChange={e => setHistory(e.target.value)} placeholder="Past medical history, allergies, previous conditions..." rows={3} style={{ resize: "vertical" }} />
             </div>
             <div>
               <label>Diagnosis *</label>
@@ -912,35 +1045,58 @@ function PrescribePage({ user, patients, setPatients, toast }) {
             </div>
           </div>
 
-          {/* Advised medications */}
-          <div style={{ marginTop: 18 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              <label style={{ margin: 0, fontSize: 14 }}>Advised Medications</label>
+          {/* Vital Signs */}
+          <div style={{ marginTop: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", marginBottom: 12, display: "block" }}>Vital Signs</label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              <div>
+                <label style={{ fontSize: 11 }}>Blood Pressure (mmHg)</label>
+                <input className="form-input" value={vitals.bp} onChange={e => setVitals({ ...vitals, bp: e.target.value })} placeholder="e.g. 120/80" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Pulse (bpm)</label>
+                <input className="form-input" value={vitals.pulse} onChange={e => setVitals({ ...vitals, pulse: e.target.value })} placeholder="e.g. 72" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Temperature (°F)</label>
+                <input className="form-input" value={vitals.temperature} onChange={e => setVitals({ ...vitals, temperature: e.target.value })} placeholder="e.g. 98.6" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>SpO2 (%)</label>
+                <input className="form-input" value={vitals.spo2} onChange={e => setVitals({ ...vitals, spo2: e.target.value })} placeholder="e.g. 98" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>BSR</label>
+                <input className="form-input" value={vitals.bsr} onChange={e => setVitals({ ...vitals, bsr: e.target.value })} placeholder="e.g. 90" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Others</label>
+                <input className="form-input" value={vitals.others} onChange={e => setVitals({ ...vitals, others: e.target.value })} placeholder="Any other vital..." />
+              </div>
+            </div>
+          </div>
+
+          {/* Medications */}
+          <div style={{ marginTop: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <label style={{ margin: 0 }}>Medications</label>
               <button className="btn-primary" onClick={addMed} style={{ padding: "6px 14px", fontSize: 12 }}>+ Add Medication</button>
             </div>
-            {/* Show already-saved meds from HO if any */}
-            {selPat.prescriptions.some(m => m.prescribedBy && m.prescribedBy.startsWith("HO")) && (
-              <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 8, padding: "10px 14px", marginBottom: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: "#4f46e5", marginBottom: 6 }}>Medications added by House Officer:</div>
-                {selPat.prescriptions.filter(m => m.prescribedBy && m.prescribedBy.startsWith("HO")).map((m, i) => (
-                  <div key={i} style={{ fontSize: 12, color: "#374151" }}>{m.name} — {m.dose} · {m.freq} · {m.duration} <span style={{ color: "#6366f1" }}>({m.prescribedByName})</span></div>
-                ))}
-              </div>
-            )}
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {meds.map((m, i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
                   <div><label style={{ fontSize: 11 }}>Medicine Name</label><input className="form-input" value={m.name} onChange={e => updateMed(i, "name", e.target.value)} placeholder="e.g. Paracetamol" /></div>
                   <div><label style={{ fontSize: 11 }}>Dose</label><input className="form-input" value={m.dose} onChange={e => updateMed(i, "dose", e.target.value)} placeholder="500mg" /></div>
                   <div><label style={{ fontSize: 11 }}>Frequency</label><input className="form-input" value={m.freq} onChange={e => updateMed(i, "freq", e.target.value)} placeholder="TDS" /></div>
                   <div><label style={{ fontSize: 11 }}>Duration</label><input className="form-input" value={m.duration} onChange={e => updateMed(i, "duration", e.target.value)} placeholder="5 days" /></div>
+                  <div><label style={{ fontSize: 11 }}>Quantity</label><input className="form-input" value={m.quantity} onChange={e => updateMed(i, "quantity", e.target.value)} placeholder="e.g. 15" /></div>
                   <button onClick={() => setMeds(meds.filter((_, j) => j !== i))} style={{ background: "#fee2e2", border: "none", color: "#dc2626", borderRadius: 8, padding: "10px 12px", cursor: "pointer" }}>✕</button>
                 </div>
               ))}
             </div>
           </div>
 
-          <button className="btn-primary" onClick={save} disabled={saving} style={{ marginTop: 20 }}>
+          <button className="btn-primary" onClick={save} disabled={saving} style={{ marginTop: 24 }}>
             {saving ? "Saving..." : "Save Prescription"}
           </button>
         </div>
@@ -951,17 +1107,25 @@ function PrescribePage({ user, patients, setPatients, toast }) {
 
 // ─── HOUSE OFFICER: ADD MEDICATION ────────────────────────────────────────────
 function HOPrescribePage({ user, patients, setPatients, toast }) {
-  // HO can see ALL active patients regardless of doctor
   const activePatients = patients.filter(p => !p.discharged);
   const [sel, setSel] = useState(null);
-  const [meds, setMeds] = useState([{ name: "", dose: "", freq: "", duration: "" }]);
+  const [meds, setMeds] = useState([{ name: "", dose: "", freq: "", quantity: "", duration: "" }]);
+  const [vitals, setVitals] = useState({ bp: "", pulse: "", temperature: "", spo2: "", bsr: "", others: "" });
+  const [diag, setDiag] = useState("");
+  const [history, setHistory] = useState("");
   const [saving, setSaving] = useState(false);
-
   const selPat = activePatients.find(p => p.admissionNo === sel);
 
-  useEffect(() => { if (sel) setMeds([{ name: "", dose: "", freq: "", duration: "" }]); }, [sel]);
+  useEffect(() => {
+    if (selPat) {
+      setMeds([{ name: "", dose: "", freq: "", quantity: "", duration: "" }]);
+      setVitals(selPat?.vitals || { bp: "", pulse: "", temperature: "", spo2: "", bsr: "", others: "" });
+      setDiag(selPat.diagnosis || "");
+      setHistory(selPat.patientHistory || "");
+    }
+  }, [sel]);
 
-  const addMed = () => setMeds([...meds, { name: "", dose: "", freq: "", duration: "" }]);
+  const addMed = () => setMeds([...meds, { name: "", dose: "", freq: "", quantity: "", duration: "" }]);
   const updateMed = (i, k, v) => { const m = [...meds]; m[i][k] = v; setMeds(m); };
 
   const save = () => {
@@ -972,16 +1136,16 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
     setTimeout(() => {
       const newMeds = valid.map(m => ({ ...m, prescribedBy: user.id, prescribedByName: user.name }));
       setPatients(ps => ps.map(p => p.admissionNo === sel
-        ? { ...p, prescriptions: [...p.prescriptions, ...newMeds] }
+        ? { ...p, prescriptions: [...p.prescriptions, ...newMeds], vitals, diagnosis: diag, patientHistory: history }
         : p));
       toast(`${valid.length} medication(s) added to IPD list for ${selPat.name}`);
-      setMeds([{ name: "", dose: "", freq: "", duration: "" }]);
+      setMeds([{ name: "", dose: "", freq: "", quantity: "", duration: "" }]);
       setSaving(false);
     }, 500);
   };
 
   return (
-    <div style={{ maxWidth: 760 }}>
+    <div style={{ maxWidth: 820 }}>
       <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 12, padding: "14px 18px", marginBottom: 16 }}>
         <div style={{ fontWeight: 700, color: "#4f46e5", fontSize: 14 }}>House Officer — Add Medication to IPD List</div>
         <div style={{ color: "#6366f1", fontSize: 12, marginTop: 2 }}>You can add medications to any active patient's IPD list. All entries are tagged with your ID.</div>
@@ -997,17 +1161,36 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
 
       {selPat && (
         <div className="card">
-          <div style={{ background: "#f0f9ff", border: "1px solid #bae6fd", borderRadius: 10, padding: "12px 16px", marginBottom: 16 }}>
-            <div style={{ fontWeight: 700, color: "#0369a1" }}>{selPat.name}</div>
-            <div style={{ color: "#0284c7", fontSize: 12 }}>{selPat.age}yrs · {selPat.sex} · {selPat.ward} Ward · Dr: {selPat.doctor}</div>
-            {selPat.diagnosis && <div style={{ color: "#0369a1", fontSize: 12, marginTop: 3 }}>Diagnosis: {selPat.diagnosis}</div>}
+          {/* Patient Info */}
+          <div style={{ background: "#f0f9ff", border: "1px solid #bae6fd", borderRadius: 10, padding: "14px 16px", marginBottom: 20 }}>
+            <div style={{ fontWeight: 700, color: "#0369a1", fontSize: 15 }}>{selPat.name}</div>
+            <div style={{ color: "#0284c7", fontSize: 13, marginTop: 2 }}>
+              {selPat.age}yrs · {selPat.sex} · {selPat.ward} Ward · DOA: {selPat.doa}
+            </div>
+            <div style={{ color: "#0284c7", fontSize: 13, marginTop: 2 }}>
+              Doctor: {getUserName(patients.reduce((acc, p) => acc, []), selPat.doctor) || selPat.doctor}
+            </div>
+            {selPat.complaint && <div style={{ color: "#0369a1", fontSize: 13, marginTop: 4 }}>Chief Complaint: {selPat.complaint}</div>}
           </div>
 
+          {/* Patient History & Diagnosis */}
+          <div style={{ display: "grid", gap: 16, marginBottom: 20 }}>
+            <div>
+              <label>Patient History</label>
+              <textarea className="form-input" value={history} onChange={e => setHistory(e.target.value)} placeholder="Past medical history, allergies, previous conditions..." rows={3} style={{ resize: "vertical" }} />
+            </div>
+            <div>
+              <label>Diagnosis</label>
+              <textarea className="form-input" value={diag} onChange={e => setDiag(e.target.value)} placeholder="Enter diagnosis..." rows={2} style={{ resize: "vertical" }} />
+            </div>
+          </div>
+
+          {/* Current Medications */}
           {selPat.prescriptions.length > 0 && (
-            <div style={{ marginBottom: 16 }}>
+            <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>Current IPD Medication List</div>
               <table>
-                <thead><tr><th>Medicine</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Added By</th></tr></thead>
+                <thead><tr><th>Medicine</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Quantity</th><th>Added By</th></tr></thead>
                 <tbody>
                   {selPat.prescriptions.map((m, i) => (
                     <tr key={i}>
@@ -1015,6 +1198,7 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
                       <td>{m.dose}</td>
                       <td>{m.freq}</td>
                       <td>{m.duration}</td>
+                      <td>{m.quantity || "—"}</td>
                       <td><span className={`badge ${m.prescribedBy && m.prescribedBy.startsWith("HO") ? "badge-ho" : "badge-panel"}`}>{m.prescribedByName || "Doctor"}</span></td>
                     </tr>
                   ))}
@@ -1023,6 +1207,38 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
             </div>
           )}
 
+          {/* Vital Signs */}
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", marginBottom: 12, display: "block" }}>Vital Signs</label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              <div>
+                <label style={{ fontSize: 11 }}>Blood Pressure (mmHg)</label>
+                <input className="form-input" value={vitals.bp} onChange={e => setVitals({ ...vitals, bp: e.target.value })} placeholder="e.g. 120/80" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Pulse (bpm)</label>
+                <input className="form-input" value={vitals.pulse} onChange={e => setVitals({ ...vitals, pulse: e.target.value })} placeholder="e.g. 72" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Temperature (°F)</label>
+                <input className="form-input" value={vitals.temperature} onChange={e => setVitals({ ...vitals, temperature: e.target.value })} placeholder="e.g. 98.6" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>SpO2 (%)</label>
+                <input className="form-input" value={vitals.spo2} onChange={e => setVitals({ ...vitals, spo2: e.target.value })} placeholder="e.g. 98" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>BSR</label>
+                <input className="form-input" value={vitals.bsr} onChange={e => setVitals({ ...vitals, bsr: e.target.value })} placeholder="e.g. 90" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Others</label>
+                <input className="form-input" value={vitals.others} onChange={e => setVitals({ ...vitals, others: e.target.value })} placeholder="Any other vital..." />
+              </div>
+            </div>
+          </div>
+
+          {/* Add New Medications */}
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <label style={{ margin: 0 }}>Add New Medications</label>
@@ -1030,16 +1246,18 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {meds.map((m, i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: 8, alignItems: "end" }}>
                   <div><label style={{ fontSize: 11 }}>Medicine Name</label><input className="form-input" value={m.name} onChange={e => updateMed(i, "name", e.target.value)} placeholder="e.g. Metformin" /></div>
                   <div><label style={{ fontSize: 11 }}>Dose</label><input className="form-input" value={m.dose} onChange={e => updateMed(i, "dose", e.target.value)} placeholder="500mg" /></div>
                   <div><label style={{ fontSize: 11 }}>Frequency</label><input className="form-input" value={m.freq} onChange={e => updateMed(i, "freq", e.target.value)} placeholder="BD" /></div>
                   <div><label style={{ fontSize: 11 }}>Duration</label><input className="form-input" value={m.duration} onChange={e => updateMed(i, "duration", e.target.value)} placeholder="3 days" /></div>
+                  <div><label style={{ fontSize: 11 }}>Quantity</label><input className="form-input" value={m.quantity} onChange={e => updateMed(i, "quantity", e.target.value)} placeholder="e.g. 15" /></div>
                   <button onClick={() => setMeds(meds.filter((_, j) => j !== i))} style={{ background: "#fee2e2", border: "none", color: "#dc2626", borderRadius: 8, padding: "10px 12px", cursor: "pointer" }}>✕</button>
                 </div>
               ))}
             </div>
           </div>
+
           <button className="btn-purple" onClick={save} disabled={saving} style={{ marginTop: 20 }}>
             {saving ? "Saving..." : "Add to IPD List"}
           </button>
@@ -1052,6 +1270,7 @@ function HOPrescribePage({ user, patients, setPatients, toast }) {
 // ─── NURSE: REQUEST MEDS ──────────────────────────────────────────────────────
 function NurseRequestPage({ user, patients, setPatients, toast }) {
   const [saving, setSaving] = useState(null);
+  const [reqQty, setReqQty] = useState({});
   const withPrescriptions = patients.filter(p => p.prescriptions.length > 0 && !p.discharged);
 
   const requestMed = (patAdmNo, medIdx) => {
@@ -1059,7 +1278,7 @@ function NurseRequestPage({ user, patients, setPatients, toast }) {
     setTimeout(() => {
       setPatients(ps => ps.map(p => {
         if (p.admissionNo !== patAdmNo) return p;
-        const req = { medIdx, medName: p.prescriptions[medIdx].name, dose: p.prescriptions[medIdx].dose, freq: p.prescriptions[medIdx].freq, requestedBy: user.id, requestedAt: `${now().date} ${now().time}`, status: "pending" };
+        const req = { medIdx, medName: p.prescriptions[medIdx].name, dose: p.prescriptions[medIdx].dose, freq: p.prescriptions[medIdx].freq, requestedBy: user.name, requestedAt: `${now().date} ${now().time}`, status: "pending", requestedQty: reqQty[`${patAdmNo}-${medIdx}`] || "" };
         const already = p.nurseRequests.some(r => r.medIdx === medIdx);
         if (already) return p;
         return { ...p, nurseRequests: [...p.nurseRequests, req] };
@@ -1079,11 +1298,11 @@ function NurseRequestPage({ user, patients, setPatients, toast }) {
         <div key={p.admissionNo} className="card" style={{ marginBottom: 16 }}>
           <div style={{ marginBottom: 12 }}>
             <div style={{ fontWeight: 700, fontSize: 15 }}>{p.name}</div>
-            <div style={{ color: "#64748b", fontSize: 12 }}>{p.admissionNo} · {p.ward} · Dr: {p.doctor}</div>
+            <div style={{ color: "#64748b", fontSize: 13 }}>{p.admissionNo} · {p.ward} · Dr: {getUserName(p.doctor)}</div>
             {p.diagnosis && <div style={{ color: "#475569", fontSize: 12, marginTop: 3 }}>Dx: {p.diagnosis}</div>}
           </div>
           <table>
-            <thead><tr><th>Medicine</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Added By</th><th>Status</th><th>Action</th></tr></thead>
+            <thead><tr><th>Medicine</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Added By</th><th>Quantity</th><th>Status</th><th>Action</th></tr></thead>
             <tbody>
               {p.prescriptions.map((m, i) => {
                 const req = p.nurseRequests.find(r => r.medIdx === i);
@@ -1094,6 +1313,24 @@ function NurseRequestPage({ user, patients, setPatients, toast }) {
                     <td>{m.freq}</td>
                     <td>{m.duration}</td>
                     <td><span className={`badge ${m.prescribedBy && m.prescribedBy.startsWith("HO") ? "badge-ho" : "badge-panel"}`}>{m.prescribedByName || "Doctor"}</span></td>
+                    <td>
+  {req ? (req.requestedQty || "—") : (
+    <input
+      className="form-input"
+      style={{ width: 100, fontSize: 12 }}
+      placeholder="e.g. 10"
+      value={reqQty[`${p.admissionNo}-${i}`] || ""}
+      onChange={e => setReqQty({ ...reqQty, [`${p.admissionNo}-${i}`]: e.target.value })}
+    />
+  )}
+</td>
+<td>
+  {!req && (
+    <button className="btn-primary" onClick={() => requestMed(p.admissionNo, i)} disabled={saving === `${p.admissionNo}-${i}`} style={{ padding: "6px 14px", fontSize: 12 }}>
+      {saving === `${p.admissionNo}-${i}` ? "..." : "Request"}
+    </button>
+  )}
+</td>
                     <td>
                       {req ? <span className={`badge badge-${req.status === "pending" ? "pending" : req.status === "approved" ? "approved" : "pending"}`} style={req.status === "rejected" ? { background: "#fee2e2", color: "#dc2626" } : {}}>{req.status}</span>
                         : <span className="badge" style={{ background: "#f1f5f9", color: "#94a3b8" }}>Not requested</span>}
@@ -1116,11 +1353,13 @@ function NurseRequestPage({ user, patients, setPatients, toast }) {
   );
 }
 
-// ─── MATRON: APPROVALS (with editable quantity) ───────────────────────────────
+// ─── MATRON: APPROVALS ───────────────────────────────────────────────────────
 function MatronApprovalsPage({ user, patients, setPatients, toast }) {
   const [saving, setSaving] = useState(null);
   const [quantities, setQuantities] = useState({});
+  const [receiveQtys, setReceiveQtys] = useState({});
 
+  // ── Section A: IPD nurse requests (unchanged) ────────────────────────────
   const pendingItems = patients.flatMap(p =>
     p.nurseRequests.filter(r => r.status === "pending").map(r => ({ ...r, patient: p }))
   );
@@ -1132,7 +1371,7 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
       setPatients(ps => ps.map(p => {
         if (p.admissionNo !== patAdmNo) return p;
         const reqs = p.nurseRequests.map(r =>
-          r.medIdx === medIdx ? { ...r, status: approve ? "approved" : "rejected", decidedBy: user.id, decidedAt: `${now().date} ${now().time}`, approvedQty: qty } : r
+          r.medIdx === medIdx ? { ...r, status: approve ? "approved" : "rejected", decidedBy: user.name, decidedAt: `${now().date} ${now().time}`, approvedQty: qty } : r
         );
         const approvals = approve ? [...p.matronApprovals, { medIdx, approvedAt: `${now().date} ${now().time}`, quantity: qty }] : p.matronApprovals;
         return { ...p, nurseRequests: reqs, matronApprovals: approvals };
@@ -1142,14 +1381,66 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
     }, 500);
   };
 
+  // ── Section B: Discharge med approvals ──────────────────────────────────
+  const pendingDischargeMeds = patients.flatMap(p =>
+    (p.dischargeMedRequests || [])
+      .map((m, i) => ({ ...m, _idx: i, patient: p }))
+      .filter(m => m.status === "pending")
+  );
+
+  const decideDischarge = (patAdmNo, medIdx, approve) => {
+    const k = `dm-${patAdmNo}-${medIdx}`;
+    setSaving(k);
+    setTimeout(() => {
+      setPatients(ps => ps.map(p => {
+        if (p.admissionNo !== patAdmNo) return p;
+        const targetMed = p.dischargeMedRequests[medIdx];
+        const approvedQty = quantities[k] !== undefined ? quantities[k] : (targetMed.quantity || "");
+        const updated = p.dischargeMedRequests.map((m, i) =>
+          i === medIdx ? { ...m, status: approve ? "approved" : "rejected", decidedBy: user.name, decidedAt: `${now().date} ${now().time}`, approvedQty: approve ? approvedQty : "" } : m
+        );
+        return { ...p, dischargeMedRequests: updated };
+      }));
+      toast(approve ? "Discharge med approved — sent to pharmacy" : "Discharge med rejected", approve ? "success" : "error");
+      setSaving(null);
+    }, 500);
+  };
+
+  // ── Section C: Receive dispensed discharge meds back from pharmacy ───────
+  const dispensedForReceiving = patients.flatMap(p =>
+    (p.dischargeMedRequests || [])
+      .map((m, i) => ({ ...m, _idx: i, patient: p }))
+      .filter(m => m.dispensed === true && m.matronReceived === false)
+  );
+
+  const receiveDischarge = (patAdmNo, medIdx) => {
+    const k = `rc-${patAdmNo}-${medIdx}`;
+    setSaving(k);
+    setTimeout(() => {
+      setPatients(ps => ps.map(p => {
+        if (p.admissionNo !== patAdmNo) return p;
+        const targetMed = p.dischargeMedRequests[medIdx];
+        const recQty = receiveQtys[k] !== undefined ? receiveQtys[k] : (targetMed.dispensedQty || targetMed.approvedQty || "");
+        const updated = p.dischargeMedRequests.map((m, i) =>
+          i === medIdx ? { ...m, matronReceived: true, receivedBy: user.name, receivedAt: `${now().date} ${now().time}`, matronReceivedQty: recQty } : m
+        );
+        return { ...p, dischargeMedRequests: updated };
+      }));
+      toast("Discharge medication received — patient may now be discharged");
+      setSaving(null);
+    }, 500);
+  };
+
   return (
     <div>
+      {/* ── SECTION A: IPD Nurse Requests ─────────────────────────────────── */}
+      <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#0f172a" }}>IPD Medication Approvals</h3>
       {pendingItems.length === 0 ? (
-        <div className="card" style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
-          <Icon name="shield" size={48} /><p style={{ marginTop: 16 }}>No pending medication approvals.</p>
+        <div className="card" style={{ textAlign: "center", padding: 40, color: "#94a3b8", marginBottom: 20 }}>
+          <Icon name="shield" size={40} /><p style={{ marginTop: 12 }}>No pending IPD medication approvals.</p>
         </div>
       ) : (
-        <div>
+        <div style={{ marginBottom: 20 }}>
           <div style={{ marginBottom: 14, color: "#64748b", fontSize: 13 }}>{pendingItems.length} request(s) awaiting approval</div>
           {pendingItems.map((r, idx) => {
             const k = `${r.patient.admissionNo}-${r.medIdx}`;
@@ -1172,16 +1463,10 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
                         <div style={{ fontSize: 10, color: "#94a3b8", fontWeight: 600, textTransform: "uppercase" }}>Frequency</div>
                         <div style={{ fontWeight: 600 }}>{r.freq}</div>
                       </div>
-                      {/* Editable quantity field */}
                       <div>
                         <div style={{ fontSize: 10, color: "#8b5cf6", fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>Approved Quantity</div>
-                        <input
-                          className="form-input"
-                          style={{ width: 140, fontSize: 13, borderColor: "#8b5cf6" }}
-                          placeholder="e.g. 10 tablets"
-                          value={quantities[k] || ""}
-                          onChange={e => setQuantities({ ...quantities, [k]: e.target.value })}
-                        />
+                        <input className="form-input" style={{ width: 140, fontSize: 13, borderColor: "#8b5cf6" }} placeholder="e.g. 10 tablets"
+                          value={quantities[k] || ""} onChange={e => setQuantities({ ...quantities, [k]: e.target.value })} />
                       </div>
                     </div>
                   </div>
@@ -1196,9 +1481,94 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
         </div>
       )}
 
+      {/* ── SECTION B: Discharge Med Approvals ───────────────────────────────── */}
+      <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#dc2626" }}>🏠 Discharge Medication Approvals</h3>
+      {pendingDischargeMeds.length === 0 ? (
+        <div className="card" style={{ textAlign: "center", padding: 40, color: "#94a3b8", marginBottom: 20 }}>
+          <Icon name="door" size={40} /><p style={{ marginTop: 12 }}>No pending discharge medication approvals.</p>
+        </div>
+      ) : (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 14, color: "#64748b", fontSize: 13 }}>{pendingDischargeMeds.length} discharge med(s) awaiting approval</div>
+          {pendingDischargeMeds.map((m, idx) => {
+            const k = `dm-${m.patient.admissionNo}-${m._idx}`;
+            return (
+              <div key={idx} className="card" style={{ marginBottom: 12, borderLeft: "4px solid #dc2626" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>{m.patient.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({m.patient.admissionNo})</span> <span style={{ background: "#fee2e2", color: "#dc2626", fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20 }}>DISCHARGE MED</span></div>
+                    <div style={{ color: "#64748b", fontSize: 12, marginTop: 2 }}>Submitted by: {m.submittedBy} · {m.submittedAt}</div>
+                    <div style={{ marginTop: 8, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
+                      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 13, fontWeight: 700 }}>{m.name}</span>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>{m.dose}</span>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>{m.freq}</span>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>{m.duration}</span>
+                        {m.quantity && <span style={{ background: "#ede9fe", color: "#7c3aed", borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 600 }}>Req Qty: {m.quantity}</span>}
+                      </div>
+                      <div style={{ marginLeft: 10 }}>
+                        <div style={{ fontSize: 10, color: "#dc2626", fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>Approved Quantity</div>
+                        <input className="form-input" style={{ width: 140, fontSize: 13, borderColor: "#dc2626" }} placeholder={`e.g. ${m.quantity || "10"}`}
+                          value={quantities[k] !== undefined ? quantities[k] : (m.quantity || "")} onChange={e => setQuantities({ ...quantities, [k]: e.target.value })} />
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <button className="btn-success" onClick={() => decideDischarge(m.patient.admissionNo, m._idx, true)} disabled={saving === k}>✓ Approve</button>
+                    <button className="btn-danger" onClick={() => decideDischarge(m.patient.admissionNo, m._idx, false)} disabled={saving === k}>✕ Reject</button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── SECTION C: Receive Dispensed Discharge Meds from Pharmacy ─────────── */}
+      <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#059669" }}>📦 Receive Dispensed Discharge Meds</h3>
+      {dispensedForReceiving.length === 0 ? (
+        <div className="card" style={{ textAlign: "center", padding: 40, color: "#94a3b8", marginBottom: 20 }}>
+          <Icon name="package" size={40} /><p style={{ marginTop: 12 }}>No dispensed discharge meds awaiting receipt.</p>
+        </div>
+      ) : (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 14, color: "#64748b", fontSize: 13 }}>{dispensedForReceiving.length} dispensed discharge med(s) ready to receive</div>
+          {dispensedForReceiving.map((m, idx) => {
+            const k = `rc-${m.patient.admissionNo}-${m._idx}`;
+            return (
+              <div key={idx} className="card" style={{ marginBottom: 12, borderLeft: "4px solid #10b981" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>{m.patient.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({m.patient.admissionNo})</span></div>
+                    <div style={{ color: "#64748b", fontSize: 12, marginTop: 2 }}>Dispensed by pharmacy at {m.dispensedAt}</div>
+                    <div style={{ marginTop: 8, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
+                      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 13, fontWeight: 700 }}>{m.name}</span>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>{m.dose}</span>
+                        <span style={{ background: "#f8fafc", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>{m.freq}</span>
+                        {m.dispensedQty && <span style={{ background: "#d1fae5", color: "#047857", borderRadius: 8, padding: "6px 12px", fontSize: 12, fontWeight: 600 }}>Dispensed Qty: {m.dispensedQty}</span>}
+                      </div>
+                      <div style={{ marginLeft: 10 }}>
+                        <div style={{ fontSize: 10, color: "#059669", fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>Received Quantity</div>
+                        <input className="form-input" style={{ width: 140, fontSize: 13, borderColor: "#059669" }} placeholder={`e.g. ${m.dispensedQty || "10"}`}
+                          value={receiveQtys[k] !== undefined ? receiveQtys[k] : (m.dispensedQty || m.approvedQty || "")} onChange={e => setReceiveQtys({ ...receiveQtys, [k]: e.target.value })} />
+                      </div>
+                    </div>
+                  </div>
+                  <button className="btn-success" onClick={() => receiveDischarge(m.patient.admissionNo, m._idx)} disabled={saving === k}>
+                    {saving === k ? "..." : "✓ Received"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── Decision History (existing) ───────────────────────────────────── */}
       {patients.some(p => p.nurseRequests.some(r => r.status !== "pending")) && (
         <div className="card" style={{ marginTop: 20 }}>
-          <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>Decision History</h3>
+          <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>IPD Decision History</h3>
           <table>
             <thead><tr><th>Patient</th><th>Medicine</th><th>Quantity</th><th>Status</th><th>Decided At</th></tr></thead>
             <tbody>
@@ -1208,7 +1578,7 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
                     <td>{p.name}</td>
                     <td style={{ fontWeight: 600 }}>{r.medName}</td>
                     <td>{r.approvedQty || "—"}</td>
-                    <td><span className={`badge`} style={r.status === "approved" ? { background: "#d1fae5", color: "#059669" } : { background: "#fee2e2", color: "#dc2626" }}>{r.status}</span></td>
+                    <td><span className="badge" style={r.status === "approved" ? { background: "#d1fae5", color: "#059669" } : { background: "#fee2e2", color: "#dc2626" }}>{r.status}</span></td>
                     <td style={{ color: "#64748b" }}>{r.decidedAt}</td>
                   </tr>
                 ))
@@ -1224,7 +1594,9 @@ function MatronApprovalsPage({ user, patients, setPatients, toast }) {
 // ─── PHARMACY: DISPENSE ───────────────────────────────────────────────────────
 function PharmacyDispensePage({ user, patients, setPatients, toast }) {
   const [saving, setSaving] = useState(null);
+  const [dispQty, setDispQty] = useState({});
 
+  // ── Section A: IPD approved meds (unchanged) ─────────────────────────────
   const approvedItems = patients.flatMap(p =>
     p.nurseRequests.filter(r => r.status === "approved" && !p.dispensed.some(d => d.medIdx === r.medIdx))
       .map(r => ({ ...r, patient: p }))
@@ -1235,28 +1607,54 @@ function PharmacyDispensePage({ user, patients, setPatients, toast }) {
     setTimeout(() => {
       setPatients(ps => ps.map(p => {
         if (p.admissionNo !== patAdmNo) return p;
-        return { ...p, dispensed: [...p.dispensed, { medIdx, medName, dispensedBy: user.id, dispensedAt: `${now().date} ${now().time}` }] };
+        return { ...p, dispensed: [...p.dispensed, { medIdx, medName, dispensedBy: user.name, dispensedAt: `${now().date} ${now().time}` }] };
       }));
       toast(`${medName} dispensed to nurse`);
       setSaving(null);
     }, 500);
   };
 
+  // ── Section B: Discharge meds approved by Matron, not yet dispensed ──────
+  const approvedDischargeMeds = patients.flatMap(p =>
+    (p.dischargeMedRequests || [])
+      .map((m, i) => ({ ...m, _idx: i, patient: p }))
+      .filter(m => m.status === "approved" && m.dispensed === false)
+  );
+
+  const dispenseDischarge = (patAdmNo, medIdx, medName) => {
+    const k = `dd-${patAdmNo}-${medIdx}`;
+    setSaving(k);
+    const qty = dispQty[k] || "";
+    setTimeout(() => {
+      setPatients(ps => ps.map(p => {
+        if (p.admissionNo !== patAdmNo) return p;
+        const updated = p.dischargeMedRequests.map((m, i) =>
+          i === medIdx ? { ...m, dispensed: true, dispensedBy: user.name, dispensedAt: `${now().date} ${now().time}`, dispensedQty: qty, matronReceived: false } : m
+        );
+        return { ...p, dischargeMedRequests: updated };
+      }));
+      toast(`${medName} dispensed for discharge — sent back to Matron`);
+      setSaving(null);
+    }, 500);
+  };
+
   return (
     <div>
+      {/* ── SECTION A: IPD Meds ───────────────────────────────────────────── */}
+      <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#0f172a" }}>IPD Medications — Dispense</h3>
       {approvedItems.length === 0 ? (
-        <div className="card" style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
-          <Icon name="package" size={48} /><p style={{ marginTop: 16 }}>No approved medications pending dispensing.</p>
+        <div className="card" style={{ textAlign: "center", padding: 40, color: "#94a3b8", marginBottom: 20 }}>
+          <Icon name="package" size={40} /><p style={{ marginTop: 12 }}>No approved IPD medications pending dispensing.</p>
         </div>
       ) : (
-        <div>
+        <div style={{ marginBottom: 20 }}>
           <div style={{ marginBottom: 14, color: "#64748b", fontSize: 13 }}>{approvedItems.length} medication(s) approved — ready to dispense</div>
           {approvedItems.map((r, i) => (
             <div key={i} className="card" style={{ marginBottom: 12, borderLeft: "4px solid #0ea5e9" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 14 }}>{r.patient.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({r.patient.admissionNo})</span></div>
-                  <div style={{ color: "#64748b", fontSize: 12 }}>{r.patient.ward} Ward · Dr: {r.patient.doctor}</div>
+                  <div style={{ color: "#64748b", fontSize: 13 }}>{r.patient.ward} Ward · Dr: {getUserName(r.patient.doctor)}</div>
                   <div style={{ marginTop: 8 }}>
                     <span style={{ fontWeight: 700, fontSize: 15, color: "#0f172a" }}>{r.medName}</span>
                     <span style={{ color: "#64748b", marginLeft: 10, fontSize: 12 }}>{r.dose} · {r.freq}</span>
@@ -1272,9 +1670,50 @@ function PharmacyDispensePage({ user, patients, setPatients, toast }) {
           ))}
         </div>
       )}
+
+      {/* ── SECTION B: Discharge Meds ─────────────────────────────────────── */}
+      <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 700, color: "#dc2626" }}>🏠 Discharge Medications — Dispense</h3>
+      {approvedDischargeMeds.length === 0 ? (
+        <div className="card" style={{ textAlign: "center", padding: 40, color: "#94a3b8", marginBottom: 20 }}>
+          <Icon name="door" size={40} /><p style={{ marginTop: 12 }}>No discharge medications pending dispensing.</p>
+        </div>
+      ) : (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 14, color: "#64748b", fontSize: 13 }}>{approvedDischargeMeds.length} discharge med(s) approved — ready to dispense</div>
+          {approvedDischargeMeds.map((m, i) => {
+            const k = `dd-${m.patient.admissionNo}-${m._idx}`;
+            return (
+              <div key={i} className="card" style={{ marginBottom: 12, borderLeft: "4px solid #dc2626" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14 }}>{m.patient.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({m.patient.admissionNo})</span> <span style={{ background: "#fee2e2", color: "#dc2626", fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20 }}>DISCHARGE MED</span></div>
+                    <div style={{ color: "#64748b", fontSize: 12, marginTop: 2 }}>Approved by Matron · Submitted by {m.submittedBy}</div>
+                    <div style={{ marginTop: 8, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                      <span style={{ fontWeight: 700, fontSize: 15, color: "#0f172a" }}>{m.name}</span>
+                      <span style={{ color: "#64748b", fontSize: 12 }}>{m.dose} · {m.freq} · {m.duration}</span>
+                      {(m.approvedQty || m.quantity) && <span style={{ color: "#8b5cf6", fontSize: 12, fontWeight: 600 }}>Approved Qty: {m.approvedQty || m.quantity}</span>}
+                      <span className="badge badge-approved">Matron Approved</span>
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <label style={{ fontSize: 11 }}>Dispensing Quantity</label>
+                      <input className="form-input" style={{ maxWidth: 200 }} placeholder="e.g. 15 tablets"
+                        value={dispQty[k] || ""} onChange={e => setDispQty({ ...dispQty, [k]: e.target.value })} />
+                    </div>
+                  </div>
+                  <button className="btn-primary" onClick={() => dispenseDischarge(m.patient.admissionNo, m._idx, m.name)} disabled={saving === k} style={{ whiteSpace: "nowrap" }}>
+                    {saving === k ? "Dispensing..." : "Dispense"}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── Dispensed History ─────────────────────────────────────────────── */}
       {patients.some(p => p.dispensed.length > 0) && (
         <div className="card" style={{ marginTop: 20 }}>
-          <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>Dispensed History</h3>
+          <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>IPD Dispensed History</h3>
           <table>
             <thead><tr><th>Patient</th><th>Medicine</th><th>Dispensed At</th><th>By</th></tr></thead>
             <tbody>
@@ -1292,7 +1731,7 @@ function PharmacyDispensePage({ user, patients, setPatients, toast }) {
 // ─── NURSE: RECEIVE MEDICATIONS (new) ─────────────────────────────────────────
 function NurseReceivePage({ user, patients, setPatients, toast }) {
   const [saving, setSaving] = useState(null);
-
+  const [receiveQty, setReceiveQty] = useState({});
   // Show dispensed items that haven't been "received" yet by nurse
   const toReceive = patients.flatMap(p =>
     p.dispensed.filter(d => !d.receivedByNurse)
@@ -1307,8 +1746,8 @@ function NurseReceivePage({ user, patients, setPatients, toast }) {
         return {
           ...p,
           dispensed: p.dispensed.map(d =>
-            d.medIdx === medIdx ? { ...d, receivedByNurse: user.id, receivedAt: `${now().date} ${now().time}` } : d
-          )
+  d.medIdx === medIdx ? { ...d, receivedByNurse: user.name, receivedAt: `${now().date} ${now().time}`, receivedQty: receiveQty[`${patAdmNo}-${medIdx}`] || "" } : d
+)
         };
       }));
       toast(`${medName} received from pharmacy — ready to administer`);
@@ -1340,6 +1779,14 @@ function NurseReceivePage({ user, patients, setPatients, toast }) {
                     <div style={{ marginTop: 6 }}>
                       <span style={{ fontWeight: 700, fontSize: 15, color: "#0f172a" }}>{d.medName}</span>
                       <span className="badge badge-dispensed" style={{ marginLeft: 10 }}>Dispensed by Pharmacy</span>
+                      <div style={{ marginTop: 8 }}>
+  <label style={{ fontSize: 11 }}>Receiving Quantity</label>
+  <input className="form-input" style={{ maxWidth: 200 }}
+    placeholder="e.g. 10 tablets"
+    value={receiveQty[k] || ""}
+    onChange={e => setReceiveQty({ ...receiveQty, [k]: e.target.value })}
+  />
+</div>
                     </div>
                   </div>
                   <button className="btn-success" onClick={() => receive(d.patient.admissionNo, d.medIdx, d.medName)} disabled={saving === k}>
@@ -1355,10 +1802,10 @@ function NurseReceivePage({ user, patients, setPatients, toast }) {
         <div className="card" style={{ marginTop: 20 }}>
           <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>Received History</h3>
           <table>
-            <thead><tr><th>Patient</th><th>Medicine</th><th>Received At</th><th>By</th></tr></thead>
+            <thead><tr><th>Patient</th><th>Medicine</th><th>Received Qty</th><th>Received At</th><th>By</th></tr></thead>
             <tbody>
               {patients.flatMap(p => p.dispensed.filter(d => d.receivedByNurse).map((d, i) => (
-                <tr key={i}><td>{p.name}</td><td style={{ fontWeight: 600 }}>{d.medName}</td><td style={{ color: "#64748b" }}>{d.receivedAt}</td><td>{d.receivedByNurse}</td></tr>
+                <tr key={i}><td>{p.name}</td><td style={{ fontWeight: 600 }}>{d.medName}</td><td>{d.receivedQty || "—"}</td><td style={{ color: "#64748b" }}>{d.receivedAt}</td><td>{d.receivedByNurse}</td></tr>
               )))}
             </tbody>
           </table>
@@ -1371,6 +1818,7 @@ function NurseReceivePage({ user, patients, setPatients, toast }) {
 // ─── NURSE: ADMINISTER ────────────────────────────────────────────────────────
 function NurseAdministerPage({ user, patients, setPatients, toast }) {
   const [saving, setSaving] = useState(null);
+  const [adminQty, setAdminQty] = useState({});
   const [notes, setNotes] = useState({});
 
   // Only show received (not yet administered) medications
@@ -1384,7 +1832,7 @@ function NurseAdministerPage({ user, patients, setPatients, toast }) {
     setTimeout(() => {
       setPatients(ps => ps.map(p => {
         if (p.admissionNo !== patAdmNo) return p;
-        return { ...p, administered: [...p.administered, { medIdx, medName, administeredBy: user.id, administeredAt: `${now().date} ${now().time}`, notes: notes[`${patAdmNo}-${medIdx}`] || "" }] };
+        return { ...p, administered: [...p.administered, { medIdx, medName, administeredBy: user.name, administeredAt: `${now().date} ${now().time}`, notes: notes[`${patAdmNo}-${medIdx}`] || "", quantity: adminQty[`${patAdmNo}-${medIdx}`] || "" }] };
       }));
       toast(`${medName} administered to patient`);
       setSaving(null);
@@ -1416,6 +1864,14 @@ function NurseAdministerPage({ user, patients, setPatients, toast }) {
                       <label style={{ fontSize: 11 }}>Administration Notes (optional)</label>
                       <input className="form-input" style={{ maxWidth: 360 }} value={notes[k] || ""} onChange={e => setNotes({ ...notes, [k]: e.target.value })} placeholder="e.g. Given with food, IV administered..." />
                     </div>
+                    <div style={{ marginTop: 8 }}>
+  <label style={{ fontSize: 11 }}>Administered Quantity</label>
+  <input className="form-input" style={{ maxWidth: 200 }}
+    placeholder="e.g. 1 tablet"
+    value={adminQty[k] || ""}
+    onChange={e => setAdminQty({ ...adminQty, [k]: e.target.value })}
+  />
+</div>
                   </div>
                   <button className="btn-success" onClick={() => administer(d.patient.admissionNo, d.medIdx, d.medName)} disabled={saving === k} style={{ marginTop: 4 }}>
                     {saving === k ? "..." : "✓ Administered"}
@@ -1430,10 +1886,10 @@ function NurseAdministerPage({ user, patients, setPatients, toast }) {
         <div className="card" style={{ marginTop: 20 }}>
           <h3 style={{ margin: "0 0 14px", fontSize: 14, fontWeight: 700 }}>Administration History</h3>
           <table>
-            <thead><tr><th>Patient</th><th>Medicine</th><th>Administered At</th><th>Notes</th></tr></thead>
+            <thead><tr><th>Patient</th><th>Medicine</th><th>Quantity</th><th>Administered By</th><th>Administered At</th><th>Notes</th></tr></thead>
             <tbody>
               {patients.flatMap(p => p.administered.map((a, i) => (
-                <tr key={i}><td>{p.name}</td><td style={{ fontWeight: 600 }}>{a.medName}</td><td style={{ color: "#64748b" }}>{a.administeredAt}</td><td style={{ color: "#64748b" }}>{a.notes || "—"}</td></tr>
+                <tr key={i}><td>{p.name}</td><td style={{ fontWeight: 600 }}>{a.medName}</td><td>{a.quantity || "—"}</td><td>{a.administeredBy}</td><td style={{ color: "#64748b" }}>{a.administeredAt}</td><td style={{ color: "#64748b" }}>{a.notes || "—"}</td></tr>
               )))}
             </tbody>
           </table>
@@ -1442,7 +1898,125 @@ function NurseAdministerPage({ user, patients, setPatients, toast }) {
     </div>
   );
 }
+// ─── NURSE: VITALS ────────────────────────────────────────────────────────────
+function NurseVitalsPage({ user, patients, setPatients, toast }) {
+  const [saving, setSaving] = useState(null);
+  const [vitalsForm, setVitalsForm] = useState({});
 
+  const activePatients = patients.filter(p => !p.discharged);
+
+  const saveVitals = (patAdmNo) => {
+    const form = vitalsForm[patAdmNo];
+    if (!form || !form.bp || !form.temp || !form.pulse) {
+      toast("Please fill BP, Temperature and Pulse", "error");
+      return;
+    }
+    setSaving(patAdmNo);
+    setTimeout(() => {
+      setPatients(ps => ps.map(p => {
+        if (p.admissionNo !== patAdmNo) return p;
+        const entry = {
+          bp: form.bp,
+          temp: form.temp,
+          pulse: form.pulse,
+          spo2: form.spo2 || "",
+          weight: form.weight || "",
+          bsr: form.bsr || "",
+          notes: form.notes || "",
+          recordedBy: user.name,
+          recordedAt: `${now().date} ${now().time}`,
+        };
+        return { ...p, vitals: [...(p.vitals || []), entry] };
+      }));
+      setVitalsForm(prev => ({ ...prev, [patAdmNo]: {} }));
+      toast("Vitals recorded successfully");
+      setSaving(null);
+    }, 500);
+  };
+
+  const updateForm = (admNo, field, value) => {
+    setVitalsForm(prev => ({ ...prev, [admNo]: { ...(prev[admNo] || {}), [field]: value } }));
+  };
+
+  return (
+    <div>
+      {activePatients.length === 0 ? (
+        <div className="card" style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
+          <Icon name="bed" size={48} /><p style={{ marginTop: 16 }}>No active patients found.</p>
+        </div>
+      ) : activePatients.map(p => {
+        const form = vitalsForm[p.admissionNo] || {};
+        return (
+          <div key={p.admissionNo} className="card" style={{ marginBottom: 14, borderLeft: "4px solid #10b981" }}>
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontWeight: 700, fontSize: 14 }}>{p.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({p.admissionNo})</span></div>
+              <div style={{ color: "#64748b", fontSize: 12 }}>{p.ward} Ward · Dr: {getUserName(p.doctor)}</div>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <div>
+                <label style={{ fontSize: 11 }}>Blood Pressure * (e.g. 120/80)</label>
+                <input className="form-input" value={form.bp || ""} onChange={e => updateForm(p.admissionNo, "bp", e.target.value)} placeholder="120/80 mmHg" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Temperature * (°F)</label>
+                <input className="form-input" value={form.temp || ""} onChange={e => updateForm(p.admissionNo, "temp", e.target.value)} placeholder="98.6 °F" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Pulse * (bpm)</label>
+                <input className="form-input" value={form.pulse || ""} onChange={e => updateForm(p.admissionNo, "pulse", e.target.value)} placeholder="72 bpm" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>SpO2 (%)</label>
+                <input className="form-input" value={form.spo2 || ""} onChange={e => updateForm(p.admissionNo, "spo2", e.target.value)} placeholder="98%" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>BSR — Blood Sugar (mg/dL)</label>
+                <input className="form-input" value={form.bsr || ""} onChange={e => updateForm(p.admissionNo, "bsr", e.target.value)} placeholder="e.g. 110 mg/dL" />
+              </div>
+              <div>
+                <label style={{ fontSize: 11 }}>Weight (kg)</label>
+                <input className="form-input" value={form.weight || ""} onChange={e => updateForm(p.admissionNo, "weight", e.target.value)} placeholder="70 kg" />
+              </div>
+              <div style={{ gridColumn: "1/-1" }}>
+                <label style={{ fontSize: 11 }}>Notes</label>
+                <input className="form-input" value={form.notes || ""} onChange={e => updateForm(p.admissionNo, "notes", e.target.value)} placeholder="Any observations..." />
+              </div>
+            </div>
+
+            <button className="btn-success" onClick={() => saveVitals(p.admissionNo)} disabled={saving === p.admissionNo}>
+              {saving === p.admissionNo ? "Saving..." : "✓ Save Vitals"}
+            </button>
+
+            {p.vitals && p.vitals.length > 0 && (
+              <div style={{ marginTop: 14 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8 }}>Vitals History</div>
+                <table>
+                  <thead><tr><th>Date & Time</th><th>BP</th><th>Temp</th><th>Pulse</th><th>SpO2</th><th>BSR</th><th>Weight</th><th>Recorded By</th><th>Notes</th></tr></thead>
+                  <tbody>
+                    {p.vitals.slice().reverse().map((v, i) => (
+                      <tr key={i}>
+                        <td style={{ color: "#64748b" }}>{v.recordedAt}</td>
+                        <td style={{ fontWeight: 600 }}>{v.bp}</td>
+                        <td>{v.temp}</td>
+                        <td>{v.pulse}</td>
+                        <td>{v.spo2 || "—"}</td>
+                        <td>{v.bsr || "—"}</td>
+                        <td>{v.weight || "—"}</td>
+                        <td>{v.recordedBy}</td>
+                        <td style={{ color: "#64748b" }}>{v.notes || "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 // ─── ADMINISTRATOR: MANAGE USERS ──────────────────────────────────────────────
 function AdminUsersPage({ users, setUsers, user, toast, showConfirm }) {
   const [editing, setEditing] = useState(null);
@@ -1624,7 +2198,7 @@ function AdminPatientsPage({ patients, setPatients, users, toast, showConfirm })
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 14 }}>{p.name} <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 12 }}>({p.admissionNo})</span> {p.discharged && <span className="badge badge-discharged" style={{ marginLeft: 6 }}>Discharged</span>}</div>
-                  <div style={{ color: "#64748b", fontSize: 12 }}>{p.age}yrs · {p.sex} · {p.ward} Ward · Dr: {getUserName(users, p.doctor)} · DOA: {p.doa}</div>
+                  <div style={{ color: "#64748b", fontSize: 12 }}>{p.age}yrs · {p.sex} · {p.ward} Ward · Dr: {getUserName(p.doctor)} · DOA: {p.doa}</div>
                   {p.diagnosis && <div style={{ color: "#475569", fontSize: 12, marginTop: 2 }}>Dx: {p.diagnosis}</div>}
                 </div>
                 <div style={{ display: "flex", gap: 6 }}>
